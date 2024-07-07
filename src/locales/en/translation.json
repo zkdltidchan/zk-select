@@ -1,0 +1,68 @@
+{
+    "header": {
+      "home": "Home",
+      "about": "About",
+      "language": "Language",
+      "openMenu": "Open Menu",
+      "closeMenu": "Close Menu",
+      "title": "ZK-SELECT",
+      "cart": "Cart",
+      "products": {
+        "label": "Products",
+        "menTops": "Men Tops",
+        "menSuits": "Men Suits",
+        "womenTops": "Women Tops",
+        "womenDresses": "Women Dresses",
+        "womenPants": "Women Pants",
+        "shirt": "Shirts & Blouses",
+        "tshirt": "T-Shirts & Cut & Sewn",
+        "tops": "Tops",
+        "jacket": "Jackets",
+        "blouson": "Blousons",
+        "coat": "Coats",
+        "pants": "Pants",
+        "skirt": "Skirts",
+        "onepiece": "One-piece Dresses",
+        "suit": "Suits & Ties",
+        "bag": "Bags",
+        "shoes": "Shoes",
+        "fashionZakka": "Fashion Goods",
+        "wallet": "Wallets & Small Goods",
+        "watch": "Watches",
+        "hairAccessory": "Hair Accessories",
+        "accessory": "Accessories",
+        "underwear": "Underwear",
+        "legwear": "Legwear",
+        "cap": "Hats",
+        "interior": "Interior Goods",
+        "kitchen": "Tableware & Kitchen Goods",
+        "zakka": "Miscellaneous Goods, Hobbies & Sports",
+        "cosme": "Cosmetics & Perfumes",
+        "musicBooks": "Music & Books",
+        "swimwear": "Swimwear & Kimono",
+        "maternity": "Maternity & Baby",
+        "others": "Others"
+      },
+      "profile": {
+        "label": "Profile",
+        "settings": "Settings",
+        "logout": "Logout"
+      },
+      "styling": "Styling",
+      "newArrival": "New Arrival",
+      "favorites": "Favorites",
+      "search": "Search",
+      "menu": "Menu"
+    },
+    "home": {
+      "title": "Welcome to Home",
+      "subtitle": "This is the home page"
+    },
+    "user": {
+      "profile": {
+        "greeting": "Hello, {{name}}",
+        "editButton": "Edit Profile"
+      }
+    }
+  }
+  
