@@ -47,14 +47,18 @@ const Button: ComponentStyleConfig = {
 const theme = extendTheme(
   {
     styles: {
-      global: {
+      global: (props: any) => ({
         'html, body': {
-          // fontSize: 'sm',
-          // color: 'gray.600',
-          // lineHeight: 'tall',
-          // background: 'gray.50',
+          color: props.colorMode === 'dark' ? 'white' : 'gray.800',
+          bg: props.colorMode === 'dark' ? 'gray.800' : 'white',
         },
-      },
+        header: {
+          bg: props.colorMode === 'dark' ? 'gray.800' : 'white',
+        },
+        footer: {
+          bg: props.colorMode === 'dark' ? 'gray.900' : 'white',
+        },
+      }),
     },
     colors: {
       // ...extendColors,

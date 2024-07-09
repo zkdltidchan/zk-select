@@ -6,11 +6,15 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import img1 from '../../assets/images/c1.jpg';
+import img2 from '../../assets/images/c2.jpg';
+import img3 from '../../assets/images/c3.jpg';
+
 
 const Carousel = () => {
   const arrowSize = useBreakpointValue({ base: '20px', md: '40px' });
   const arrowPosition = useBreakpointValue({ base: '5px', md: '10px' });
-  const imageHeight = useBreakpointValue({ base: '300px', md: '600px' });
+  const imageHeight = useBreakpointValue({ base: '250px', md: '500px' });
 
   const settings: Settings = {
     dots: true,
@@ -36,9 +40,9 @@ const Carousel = () => {
   };
 
   const slides = [
-    { id: 1, src: "https://picsum.photos/1600/600?random=1", alt: "Slide 1" },
-    { id: 2, src: "https://picsum.photos/1600/600?random=2", alt: "Slide 2" },
-    { id: 3, src: "https://picsum.photos/1600/600?random=3", alt: "Slide 3" },
+    { id: 1, src: img1, alt: "Slide 1" },
+    { id: 2, src: img2, alt: "Slide 2" },
+    { id: 3, src: img3, alt: "Slide 3" },
   ];
 
   return (

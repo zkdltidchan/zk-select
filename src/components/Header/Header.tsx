@@ -1,22 +1,47 @@
 // Header.tsx
-import React from 'react';
+import React,
+{
+  useEffect,
+  useState,
+} from 'react';
 import {
   Box,
   Flex,
-  Link,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import keys from '../../i18n/keys';
 import MobileMenu from './MobileMenu';
 import DesktopMenu from './DesktopMenu';
 
-import { Link as RouterLink } from 'react-router-dom';
-import { CustomerColorBox } from '../CustomerColorBox';
+import { Logo, LogoProps } from './Logo';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  headerHeight: string | number;
+  scrolledHeaderHeight: string | number;
+}
+
+const Header: React.FC<HeaderProps> = ({ headerHeight, scrolledHeaderHeight }) => {
   const { t,
     //  i18n,
   } = useTranslation();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const logoProps: LogoProps = {
+    transform: isScrolled ? "translateY(0px) scale(0.8) translateZ(0px)" : "translateY(48px) scale(1.5) translateZ(0px)",
+    transition: "all 0.8s",
+    boxSize: isScrolled ? "80px" : "125px",
+  };
 
   // const changeLanguage = (lng: string) => {
   //   i18n.changeLanguage(lng);
@@ -24,19 +49,37 @@ const Header: React.FC = () => {
   // };
 
   return (
-    <CustomerColorBox as="header" py={4}>
+    <Box
+      as="header"
+      py={4}
+      position="fixed"
+      top="0"
+      width="100%"
+      opacity={isScrolled ? 0.8 : 1}
+      boxShadow={isScrolled ? 'sm' : 'none'}
+      transition="all 0.3s"
+      height={isScrolled ? scrolledHeaderHeight : headerHeight}
+      zIndex="999"
+    >
       <Flex justify="space-between" align="center" maxW="container.xl" mx="auto" px={4}>
-        <Link as={RouterLink} to="/" fontWeight="bold" size="lg">
+        {/* <Link as={RouterLink} to="/" fontWeight="bold" size="lg">
           {t(keys.header.title)}
-        </Link>
+        </Link> */}
         <Box display={{ base: 'none', md: 'flex' }} flex="1" ml={10}>
-          <DesktopMenu />
+          <DesktopMenu
+            menuHeight={"10px"}
+            LogoComponent={
+              <Logo
+                {...logoProps}
+              />
+            }
+          />
         </Box>
         <Box display={{ base: 'flex', md: 'none' }}>
           <MobileMenu />
         </Box>
       </Flex>
-    </CustomerColorBox>
+    </Box>
   );
 };
 
