@@ -7,9 +7,7 @@ import React,
 import {
   Box,
   Flex,
-  useBreakpointValue,
 } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
 import MobileMenu from './MobileMenu';
 import DesktopMenu from './DesktopMenu';
 
@@ -21,9 +19,6 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ headerHeight, scrolledHeaderHeight }) => {
-  const { t,
-    //  i18n,
-  } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
