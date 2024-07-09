@@ -7,6 +7,7 @@ import React,
 import {
   Box,
   Flex,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import MobileMenu from './MobileMenu';
 import DesktopMenu from './DesktopMenu';
@@ -32,10 +33,19 @@ const Header: React.FC<HeaderProps> = ({ headerHeight, scrolledHeaderHeight }) =
     };
   }, []);
 
+
+  const boxSize = useBreakpointValue({
+    base: isScrolled ? '40px' : '60px',
+    md: isScrolled ? '80px' : '125px'
+  });
+  const transform = useBreakpointValue({
+    base: isScrolled ? "translateY(0px) scale(1) translateZ(0px)" : "translateY(18px) scale(2) translateZ(0px)",
+    md: isScrolled ? "translateY(0px) scale(0.8) translateZ(0px)" : "translateY(48px) scale(1.5) translateZ(0px)",
+  })
   const logoProps: LogoProps = {
-    transform: isScrolled ? "translateY(0px) scale(0.8) translateZ(0px)" : "translateY(48px) scale(1.5) translateZ(0px)",
+    transform: transform,
     transition: "all 0.8s",
-    boxSize: isScrolled ? "80px" : "125px",
+    boxSize: boxSize,
   };
 
   // const changeLanguage = (lng: string) => {
@@ -57,9 +67,6 @@ const Header: React.FC<HeaderProps> = ({ headerHeight, scrolledHeaderHeight }) =
       zIndex="999"
     >
       <Flex justify="space-between" align="center" maxW="container.xl" mx="auto" px={4}>
-        {/* <Link as={RouterLink} to="/" fontWeight="bold" size="lg">
-          {t(keys.header.title)}
-        </Link> */}
         <Box display={{ base: 'none', md: 'flex' }} flex="1" ml={10}>
           <DesktopMenu
             menuHeight={"10px"}
@@ -70,10 +77,16 @@ const Header: React.FC<HeaderProps> = ({ headerHeight, scrolledHeaderHeight }) =
             }
           />
         </Box>
-        <Box display={{ base: 'flex', md: 'none' }}>
-          <MobileMenu />
-        </Box>
       </Flex>
+      <Box display={{ base: 'flex', md: 'none' }} className='mobileHeader'>
+        <MobileMenu
+          menuHeight={"10px"}
+          LogoComponent={
+            <Logo
+              {...logoProps}
+            />}
+        />
+      </Box>
     </Box>
   );
 };
