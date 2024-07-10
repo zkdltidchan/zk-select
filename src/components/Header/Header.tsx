@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ headerHeight, scrolledHeaderHeight }) =
   return (
     <Box
       as="header"
-      py={4}
+      p={4}
       position="fixed"
       top="0"
       width="100%"
@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ headerHeight, scrolledHeaderHeight }) =
       <Flex justify="space-between" align="center" maxW="container.xl" mx="auto" px={4}>
         <Box display={{ base: 'none', md: 'flex' }} flex="1" ml={10}>
           <DesktopMenu
-            menuHeight={"10px"}
+            menuHeight={"20px"}
             LogoComponent={
               <Logo
                 {...logoProps}
@@ -80,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ headerHeight, scrolledHeaderHeight }) =
       </Flex>
       <Box display={{ base: 'flex', md: 'none' }} className='mobileHeader'>
         <MobileMenu
-          menuHeight={"10px"}
+          menuHeight={"20px"}
           LogoComponent={
             <Logo
               {...logoProps}

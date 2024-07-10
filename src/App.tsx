@@ -24,16 +24,16 @@ const RouterContainer: React.FC = () => {
   const scrolledHeaderHeightPx = "50px";
   const headerHeightPx = "80px";
   const headerHeight = useBreakpointValue(
-    { base: '60px', 
+    { base: '70px', 
       md: headerHeightPx,
     }) || headerHeightPx;
   const scrolledHeaderHeight = useBreakpointValue(
-    { base: '40px',
+    { base: '50px',
       md: scrolledHeaderHeightPx,
     }) || scrolledHeaderHeightPx;
   
   const headerPt = useBreakpointValue(
-    { base: '65px',
+    { base: '80px',
       md: '150px',
     }) || '150px';
 

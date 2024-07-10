@@ -5,8 +5,11 @@ import {
   Badge,
   Text,
   VStack,
-  Button,
+  Flex,
+  IconButton,
+  useBreakpointValue,
 } from '@chakra-ui/react';
+import { FaHeart, FaRegHeart, FaShoppingCart } from 'react-icons/fa';
 
 interface ProductProps {
   imageSrc: string;
@@ -14,21 +17,26 @@ interface ProductProps {
   productName: string;
   price: number;
   isNew: boolean;
+  favorite: boolean;
+  onFavoriteClick?: () => void;
+  onAddToCartClick?: () => void;
 }
 
-const Product: React.FC<ProductProps> = ({ imageSrc, brandName, productName, price, isNew }) => {
+const Product: React.FC<ProductProps> = (productProps) => {
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
     <Box
       overflow="hidden"
       position="relative"
-      _hover={{
+      _hover={!isMobile ? {
         '.hover-content': { opacity: 1 },
         '.brand-name': { display: 'none' },
         '.product-name': { display: 'none' },
         '.price': { display: 'block' },
-      }}
+      } : undefined}
     >
-      {isNew && (
+      {productProps.isNew && (
         <Badge
           position="absolute"
           top="5px"
@@ -40,38 +48,54 @@ const Product: React.FC<ProductProps> = ({ imageSrc, brandName, productName, pri
         </Badge>
       )}
       <Box position="relative">
-        <Image src={imageSrc} alt={productName} width={"100%"} />
-        <Button
-          bg="gray.700"
-          textColor={"white"}
+        <Image src={productProps.imageSrc} alt={productProps.productName} width="100%" />
+        <Flex
           className="hover-content"
           position="absolute"
-          borderRadius="none"
           bottom="0px"
           width="100%"
-          opacity="0"
+          opacity={isMobile ? 1 : 0}
           transition="opacity 0.3s"
           zIndex="1"
-          _hover={{ 
-            bg: "gray.900",
-           }}
+          bg="gray.700"
         >
-          + Cart
-        </Button>
+          {productProps.onAddToCartClick && (
+            <IconButton
+              aria-label="Add to Cart"
+              icon={<FaShoppingCart />}
+              flex="1"
+              borderRadius="none"
+              bg="gray.700"
+              textColor="white"
+              _hover={{ bg: "gray.900" }}
+              onClick={(e) => { e.stopPropagation(); productProps.onAddToCartClick && productProps.onAddToCartClick(); }}
+            />
+          )}
+          {productProps.onFavoriteClick && (
+            <IconButton
+              aria-label={productProps.favorite ? "Remove from Favorites" : "Add to Favorites"}
+              icon={productProps.favorite ? <FaHeart /> : <FaRegHeart />}
+              flex="1"
+              borderRadius="none"
+              bg="gray.700"
+              textColor="white"
+              _hover={{ bg: "gray.900" }}
+              onClick={(e) => { e.stopPropagation(); productProps.onFavoriteClick && productProps.onFavoriteClick(); }}
+            />
+          )}
+        </Flex>
       </Box>
 
       <VStack align="start" p={4} spacing={2}>
-        
-          <Text fontWeight="bold" className="brand-name">
-            {brandName}
-          </Text>
-          <Text className="product-name">
-            {productName}
-          </Text>
-          <Text fontWeight="bold" className="price" display="none">
-            ${price}
-          </Text>
-        
+        <Text fontWeight="bold" className="brand-name">
+          {productProps.brandName}
+        </Text>
+        <Text className="product-name">
+          {productProps.productName}
+        </Text>
+        <Text fontWeight="bold" className="price" display={!isMobile ? "none" : "block"}>
+          ${productProps.price}
+        </Text>
       </VStack>
     </Box>
   );

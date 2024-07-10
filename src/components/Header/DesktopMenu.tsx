@@ -19,34 +19,16 @@ import {
   Flex,
   VStack,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
   FaShoppingCart,
   FaHeart,
   FaSearch,
   FaUser,
-  FaTshirt,
-  FaSuitcase,
-  FaFemale,
-  FaMale,
-  FaBlender,
-  FaRegHandPeace,
-  FaWallet,
-  FaClock,
-  FaHatCowboy,
-  FaChair,
-  FaMugHot,
-  FaDumbbell,
-  FaWineBottle,
-  FaMusic,
-  FaSwimmer,
-  FaBaby,
-  FaEllipsisH,
-  FaShoePrints,
-  FaSocks,
 } from 'react-icons/fa';
 import { Link as RouterLink } from 'react-router-dom';
-
+import { menProductItems, womenProductItems, kidsProductItems, ItemProps } from '../../components/Header/Routers';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 interface DesktopMenuProps {
@@ -60,10 +42,15 @@ function DesktopMenu(
   const { t } = useTranslation();
   const { onOpen: onProductsOpen, onClose: onProductsClose, isOpen: isProductsOpen } = useDisclosure();
   const { onOpen: onProfileOpen, onClose: onProfileClose, isOpen: isProfileOpen } = useDisclosure();
+  // selected men/women/kids to show products items
+  const [selected, setSelected] = useState('men');
+
+  const toggleProducts = (selected: string) => {
+    setSelected(selected);
+  };
 
   return (
-    <>
-      <HStack w="100%" h={menuHeight} spacing={4} justify="space-between">
+      <HStack w="100%" h={menuHeight} spacing={4} justify="space-between" align="center">
         <HStack spacing={4} w="100%" className='desktop'>
           <Link as={RouterLink} to="/">{LogoComponent}</Link>
           <Link as={RouterLink} to="/new-arrivals">{t(keys.header.newArrival)}</Link>
@@ -77,273 +64,66 @@ function DesktopMenu(
               </PopoverTrigger>
               <PopoverContent w="100vw">
                 <PopoverArrow />
-                <PopoverHeader>{t(keys.header.products.label)}</PopoverHeader>
+                <PopoverHeader>
+                  <HStack justify='center'>
+                    <Button
+                      borderBottom={selected === 'men' ? '6px solid gray' : 'none'}
+                     onClick={() => toggleProducts('men') }>MEN</Button>
+                    <Button
+                      borderBottom={selected === 'women' ? '6px solid gray' : 'none'}
+                     onClick={() => toggleProducts('women')}>WOMEN</Button>
+                    <Button
+                      borderBottom={selected === 'kids' ? '6px solid gray' : 'none'}
+                     onClick={() => toggleProducts('kids')}>KIDS</Button>
+                  </HStack>
+                  </PopoverHeader>
                 <PopoverBody paddingX={16}>
                   <SimpleGrid columns={4} spacing={4}>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/shirt">
-                        <Flex align="center">
-                          <FaTshirt />
-                          <Box ml={2}>{t(keys.header.products.menTops)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/suit">
-                        <Flex align="center">
-                          <FaSuitcase />
-                          <Box ml={2}>{t(keys.header.products.menSuits)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/shirt">
-                        <Flex align="center">
-                          <FaFemale />
-                          <Box ml={2}>{t(keys.header.products.womenTops)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/dress">
-                        <Flex align="center">
-                          <FaFemale />
-                          <Box ml={2}>{t(keys.header.products.womenDresses)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/pants">
-                        <Flex align="center">
-                          <FaMale />
-                          <Box ml={2}>{t(keys.header.products.womenPants)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/shirt">
-                        <Flex align="center">
-                          <FaTshirt />
-                          <Box ml={2}>{t(keys.header.products.shirt)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/t-shirt">
-                        <Flex align="center">
-                          <FaTshirt />
-                          <Box ml={2}>{t(keys.header.products.tshirt)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/tops">
-                        <Flex align="center">
-                          <FaTshirt />
-                          <Box ml={2}>{t(keys.header.products.tops)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/jacket">
-                        <Flex align="center">
-                          <FaBlender />
-                          <Box ml={2}>{t(keys.header.products.jacket)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/blouson">
-                        <Flex align="center">
-                          <FaRegHandPeace />
-                          <Box ml={2}>{t(keys.header.products.blouson)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/coat">
-                        <Flex align="center">
-                          <FaRegHandPeace />
-                          <Box ml={2}>{t(keys.header.products.coat)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/pants">
-                        <Flex align="center">
-                          <FaMale />
-                          <Box ml={2}>{t(keys.header.products.pants)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/skirt">
-                        <Flex align="center">
-                          <FaFemale />
-                          <Box ml={2}>{t(keys.header.products.skirt)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/one-piece">
-                        <Flex align="center">
-                          <FaFemale />
-                          <Box ml={2}>{t(keys.header.products.onepiece)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/suit">
-                        <Flex align="center">
-                          <FaSuitcase />
-                          <Box ml={2}>{t(keys.header.products.suit)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/bag">
-                        <Flex align="center">
-                          <FaSuitcase />
-                          <Box ml={2}>{t(keys.header.products.bag)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/shoes">
-                        <Flex align="center">
-                          <FaShoePrints />
-                          <Box ml={2}>{t(keys.header.products.shoes)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/fashiongoods">
-                        <Flex align="center">
-                          <FaWallet />
-                          <Box ml={2}>{t(keys.header.products.fashionZakka)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/wallet">
-                        <Flex align="center">
-                          <FaWallet />
-                          <Box ml={2}>{t(keys.header.products.wallet)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/watch">
-                        <Flex align="center">
-                          <FaClock />
-                          <Box ml={2}>{t(keys.header.products.watch)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/hair-accessory">
-                        <Flex align="center">
-                          <FaHatCowboy />
-                          <Box ml={2}>{t(keys.header.products.hairAccessory)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/accessory">
-                        <Flex align="center">
-                          <FaRegHandPeace />
-                          <Box ml={2}>{t(keys.header.products.accessory)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/underwear">
-                        <Flex align="center">
-                          <FaRegHandPeace />
-                          <Box ml={2}>{t(keys.header.products.underwear)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/legwear">
-                        <Flex align="center">
-                          <FaSocks />
-                          <Box ml={2}>{t(keys.header.products.legwear)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/hat">
-                        <Flex align="center">
-                          <FaHatCowboy />
-                          <Box ml={2}>{t(keys.header.products.cap)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/interior">
-                        <Flex align="center">
-                          <FaChair />
-                          <Box ml={2}>{t(keys.header.products.interior)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/tablewear">
-                        <Flex align="center">
-                          <FaMugHot />
-                          <Box ml={2}>{t(keys.header.products.kitchen)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/hobby">
-                        <Flex align="center">
-                          <FaDumbbell />
-                          <Box ml={2}>{t(keys.header.products.zakka)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/cosmetics">
-                        <Flex align="center">
-                          <FaWineBottle />
-                          <Box ml={2}>{t(keys.header.products.cosme)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/music">
-                        <Flex align="center">
-                          <FaMusic />
-                          <Box ml={2}>{t(keys.header.products.musicBooks)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/swimwear">
-                        <Flex align="center">
-                          <FaSwimmer />
-                          <Box ml={2}>{t(keys.header.products.swimwear)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/maternity">
-                        <Flex align="center">
-                          <FaBaby />
-                          <Box ml={2}>{t(keys.header.products.maternity)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
-                    <GridItem>
-                      <Link as={RouterLink} to="/category/etc">
-                        <Flex align="center">
-                          <FaEllipsisH />
-                          <Box ml={2}>{t(keys.header.products.others)}</Box>
-                        </Flex>
-                      </Link>
-                    </GridItem>
+                    {
+                      selected === 'women' &&
+                      womenProductItems().map((item: ItemProps) => {
+                        return (
+                          <GridItem key={item.id}>
+                          <Link as={RouterLink} to={item.path} key={item.id}>
+                            <Flex align="center">
+                              {item.icon}
+                              <Box ml={2}>{t(item.label)}</Box>
+                            </Flex>
+                          </Link>
+                          </GridItem>
+                        )
+                      })
+                    }
+                    {
+                      selected === 'men' &&
+                      menProductItems().map((item: ItemProps) => {
+                        return (
+                          <GridItem key={item.id}>
+                          <Link as={RouterLink} to={item.path} key={item.id}>
+                            <Flex align="center">
+                              {item.icon}
+                              <Box ml={2}>{t(item.label)}</Box>
+                            </Flex>
+                          </Link>
+                          </GridItem>
+                        )
+                      })
+                    }
+                    {
+                      selected === 'kids' &&
+                      kidsProductItems().map((item: ItemProps) => {
+                        return (
+                          <GridItem key={item.id}>
+                          <Link as={RouterLink} to={item.path} key={item.id}>
+                            <Flex align="center">
+                              {item.icon}
+                              <Box ml={2}>{t(item.label)}</Box>
+                            </Flex>
+                          </Link>
+                          </GridItem>
+                        )
+                      })
+                    }
                   </SimpleGrid>
                 </PopoverBody>
               </PopoverContent>
@@ -382,7 +162,6 @@ function DesktopMenu(
           <ColorModeSwitcher />
         </HStack>
       </HStack>
-    </>
   );
 }
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -20,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import keys from '../../i18n/keys';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 interface MobileMenuProps {
   LogoComponent: React.ReactNode;
@@ -90,7 +92,7 @@ function MobileMenu({ LogoComponent, menuHeight }: MobileMenuProps) {
 
   return (
     <>
-      <Flex w="100%" h={menuHeight} align="center">
+      <Flex w="100%" h={menuHeight} align="center" className='mobile'>
         <Spacer />
         <Link as={RouterLink} to="/">{LogoComponent}</Link>
         <Spacer />
@@ -99,7 +101,8 @@ function MobileMenu({ LogoComponent, menuHeight }: MobileMenuProps) {
           icon={<HamburgerIcon />}
           display={{ base: 'flex', md: 'none' }}
           onClick={onOpen}
-          size="lg"
+          size="2xl"
+          fontSize="2xl"
         />
       </Flex>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
@@ -108,7 +111,7 @@ function MobileMenu({ LogoComponent, menuHeight }: MobileMenuProps) {
           <DrawerCloseButton />
           <DrawerHeader>{t(keys.header.menu)}</DrawerHeader>
           <DrawerBody>
-            <VStack spacing={4} align="start">
+            <VStack spacing={4} align="start" h="100%">
               <Link as={RouterLink} to="/new-arrivals" onClick={onClose}>{t(keys.header.newArrival)}</Link>
               <ProductsMenuItems onClose={onClose} />
               <Link as={RouterLink} to="/styling" onClick={onClose}>{t(keys.header.styling)}</Link>
@@ -116,6 +119,8 @@ function MobileMenu({ LogoComponent, menuHeight }: MobileMenuProps) {
               <Link as={RouterLink} to="/favorites" onClick={onClose}>{t(keys.header.favorites)}</Link>
               <Link as={RouterLink} to="/search" onClick={onClose}>{t(keys.header.search)}</Link>
               <ProfileMenuItems onClose={onClose} />
+              <Spacer />
+              <ColorModeSwitcher />
             </VStack>
           </DrawerBody>
         </DrawerContent>
