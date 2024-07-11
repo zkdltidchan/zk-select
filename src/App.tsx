@@ -18,6 +18,7 @@ import Favorites from './pages/Favorites';
 import NewArrivals from './pages/NewArrivals';
 
 import NotFound from './pages/NotFound';
+import { AuthProvider } from './context/AuthContext';
 
 
 const RouterContainer: React.FC = () => {
@@ -64,9 +65,11 @@ const RouterContainer: React.FC = () => {
 
 const App: React.FC = () => {
   return (
+    <AuthProvider>
     <ChakraProvider theme={theme}>
       <RouterContainer />
     </ChakraProvider>
+    </AuthProvider>
   );
 }
 

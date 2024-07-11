@@ -12,12 +12,13 @@ import {
 import { FaHeart, FaRegHeart, FaShoppingCart } from 'react-icons/fa';
 
 interface ProductProps {
+  id: string;
   imageSrc: string;
   brandName: string;
   productName: string;
   price: number;
   isNew: boolean;
-  favorite: boolean;
+  favorite?: boolean;
   onFavoriteClick?: () => void;
   onAddToCartClick?: () => void;
 }
