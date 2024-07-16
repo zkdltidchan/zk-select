@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState,
+} from 'react';
 import {
   Box,
   Heading,
@@ -11,47 +13,26 @@ import Carousel from './Carousel';
 import ProductList from './ProductList';
 import { ProductProps } from '../../components/Product';
 import CartModal from './CartModal';
-import { addToFavorites, removeFromFavorites } from '../../services/favoriteService';
-import { fetchProducts } from '../../services/productService';
+import { useFavorites } from '../../context/FavoriteContext';
+import { useProducts } from '../../context/ProductContext';
 
 const Home: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<ProductProps>({} as ProductProps);
-  const [products, setProducts] = useState<ProductProps[]>([]);
-  const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  useEffect(() => {
-    const getProducts = async () => {
-      const fetchedProducts = await fetchProducts();
-      setProducts(fetchedProducts);
-      setLoading(false);
-    };
-
-    getProducts();
-  }, []);
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
+  const { products, loading } = useProducts();
 
   const handleAddToCartClick = (product: ProductProps) => {
     setSelectedProduct(product);
     onOpen();
   };
 
-  const handleFavoriteClick = (product: ProductProps) => {
-    const updatedProducts = products.map(p => {
-      if (p.id === product.id) {
-        const updatedProduct = {
-          ...p,
-          favorite: !p.favorite,
-        };
-        if (updatedProduct.favorite) {
-          addToFavorites(updatedProduct.id);
-        } else {
-          removeFromFavorites(updatedProduct.id);
-        }
-        return updatedProduct;
-      }
-      return p;
-    });
-    setProducts(updatedProducts);
+  const handleFavoriteClick = async (product: ProductProps) => {
+    if (isFavorite(product.id)) {
+      removeFromFavorites(product.id);
+    } else {
+      addToFavorites(product.id);
+    }
   };
 
   if (loading) {

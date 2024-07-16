@@ -7,6 +7,8 @@ import {
   VStack,
   Flex,
   IconButton,
+  useToast,
+
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { FaHeart, FaRegHeart, FaShoppingCart } from 'react-icons/fa';
@@ -25,6 +27,33 @@ interface ProductProps {
 
 const Product: React.FC<ProductProps> = (productProps) => {
   const isMobile = useBreakpointValue({ base: true, md: false });
+
+  const toast = useToast();
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (productProps.onFavoriteClick) {
+      productProps.onFavoriteClick();
+    }
+    if (productProps.favorite) {
+      toast({
+        colorScheme: "gray",
+        title: "Removed from favorites",
+        description: `${productProps.productName}`,
+        status: "success",
+        duration: 1300,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        colorScheme: "gray",
+        title: "Added to favorites",
+        description: `${productProps.productName}`,
+        status: "success",
+        duration: 1300,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <Box
@@ -52,10 +81,10 @@ const Product: React.FC<ProductProps> = (productProps) => {
         <Image src={productProps.imageSrc} alt={productProps.productName} width="100%" />
         <Flex
           className="hover-content"
-          position="absolute"
+          // position="absolute"
           bottom="0px"
           width="100%"
-          opacity={isMobile ? 1 : 0}
+          // opacity={isMobile ? 1 : 0}
           transition="opacity 0.3s"
           zIndex="1"
           bg="gray.700"
@@ -75,13 +104,13 @@ const Product: React.FC<ProductProps> = (productProps) => {
           {productProps.onFavoriteClick && (
             <IconButton
               aria-label={productProps.favorite ? "Remove from Favorites" : "Add to Favorites"}
-              icon={productProps.favorite ? <FaHeart /> : <FaRegHeart />}
+              icon={productProps.favorite ? <FaHeart color="pink" /> : <FaRegHeart />}
               flex="1"
               borderRadius="none"
               bg="gray.700"
               textColor="white"
               _hover={{ bg: "gray.900" }}
-              onClick={(e) => { e.stopPropagation(); productProps.onFavoriteClick && productProps.onFavoriteClick(); }}
+              onClick={handleFavoriteClick}
             />
           )}
         </Flex>
@@ -91,7 +120,7 @@ const Product: React.FC<ProductProps> = (productProps) => {
         <Text fontWeight="bold" className="brand-name">
           {productProps.brandName}
         </Text>
-        <Text className="product-name">
+        <Text className="product-name" noOfLines={2}>
           {productProps.productName}
         </Text>
         <Text fontWeight="bold" className="price" display={!isMobile ? "none" : "block"}>

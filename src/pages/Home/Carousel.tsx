@@ -1,20 +1,23 @@
 import Slider, { Settings } from 'react-slick';
-import { 
-  Box, 
+import {
+  Box,
   Image,
   IconButton,
   useBreakpointValue,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import img1 from '../../assets/images/c1.jpg';
 import img2 from '../../assets/images/c2.jpg';
 import img3 from '../../assets/images/c3.jpg';
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Carousel = () => {
   const arrowSize = useBreakpointValue({ base: '20px', md: '40px' });
   const arrowPosition = useBreakpointValue({ base: '5px', md: '10px' });
   const imageHeight = useBreakpointValue({ base: '250px', md: '500px' });
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const settings: Settings = {
     dots: true,
@@ -24,18 +27,22 @@ const Carousel = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
+    beforeChange: (current, next) => setCurrentSlide(next),
     nextArrow: <NextArrow size={arrowSize} position={arrowPosition} />,
     prevArrow: <PrevArrow size={arrowSize} position={arrowPosition} />,
-    appendDots: dots => (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          padding: "10px"
-        }}
-      >
-        {dots}
-      </div>
+  
+    customPaging: (i) => (
+      <Box
+        p="0"
+        justifyContent="center"
+        width="30px"
+        height="10px"
+        m="0"
+        border="1px black solid"
+        opacity={0.8}
+        _hover={{ opacity: 1 }}
+        bg={i === currentSlide ? "gray" : "white"}
+      />
     ),
   };
 

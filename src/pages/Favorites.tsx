@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+    useState,
+} from 'react';
 import { Box, Text, SimpleGrid, useDisclosure, Spinner } from '@chakra-ui/react';
 import { Product, ProductProps } from '../components/Product';
-import { fetchProducts } from '../services/productService';
-import { getFavorites, addToFavorites, removeFromFavorites } from '../services/favoriteService';
+import { useFavorites } from '../context/FavoriteContext';
+import { useProducts } from '../context/ProductContext';
 import CartModal from './Home/CartModal';
 
 const Favorites: React.FC = () => {
-    const [favoriteProducts, setFavoriteProducts] = useState<ProductProps[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [selectedProduct, setSelectedProduct] = useState<ProductProps>({} as ProductProps);
+    const { products, loading } = useProducts();
 
     const handleAddToCartClick = (product: ProductProps) => {
         setSelectedProduct(product);
@@ -18,35 +20,12 @@ const Favorites: React.FC = () => {
     };
 
     const handleFavoriteClick = (product: ProductProps) => {
-        const updatedProducts = favoriteProducts.map(p => {
-            if (p.id === product.id) {
-                const updatedProduct = {
-                    ...p,
-                    favorite: !p.favorite,
-                };
-                if (updatedProduct.favorite) {
-                    addToFavorites(updatedProduct.id);
-                } else {
-                    removeFromFavorites(updatedProduct.id);
-                }
-                return updatedProduct;
-            }
-            return p;
-        });
-        setFavoriteProducts(updatedProducts);
+        if (isFavorite(product.id)) {
+            removeFromFavorites(product.id);
+        } else {
+            addToFavorites(product.id);
+        }
     };
-
-    useEffect(() => {
-        const loadFavoriteProducts = async () => {
-            const allProducts = await fetchProducts();
-            const favoriteIds = getFavorites();
-            const filteredProducts = allProducts.filter(product => favoriteIds.includes(product.id));
-            setFavoriteProducts(filteredProducts);
-            setLoading(false);
-        };
-
-        loadFavoriteProducts();
-    }, []);
 
     if (loading) {
         return (
@@ -62,14 +41,21 @@ const Favorites: React.FC = () => {
                 Favorites
             </Text>
             <SimpleGrid columns={{ base: 2, md: 5 }} spacing={6}>
-                {favoriteProducts.map((product, index) => (
-                    <Product
-                        key={index}
-                        {...product}
-                        onFavoriteClick={() => handleFavoriteClick(product)}
-                        onAddToCartClick={() => handleAddToCartClick(product)}
-                    />
-                ))}
+                {products.map((product: ProductProps, index: number) => {
+                    if (isFavorite(product.id)) {
+                        return (
+                            <Product
+                                key={index}
+                                {...product}
+                                favorite={isFavorite(product.id)}
+                                onFavoriteClick={() => handleFavoriteClick(product)}
+                                onAddToCartClick={() => handleAddToCartClick(product)}
+                            />
+                        );
+                    }
+                    return null;
+                }
+                )}
             </SimpleGrid>
             {selectedProduct && (
                 <CartModal

@@ -3,6 +3,7 @@ import {
     SimpleGrid
 } from '@chakra-ui/react';
 import { Product, ProductProps } from '../../components/Product';
+import { useFavorites } from '../../context/FavoriteContext';
 
 interface ProductListProps {
     products: ProductProps[];
@@ -11,14 +12,14 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products, onAddToCartClick, onFavoriteClick }) => {
-
+    const { isFavorite } = useFavorites();
     return (
         <SimpleGrid columns={{ base: 2, md: 5 }} spacing={4}>
             {products.map((product, index) => (
                 <Product
                     key={index}
                     {...product}
-                    favorite={product.favorite}
+                    favorite={isFavorite(product.id)}
                     onFavoriteClick={onFavoriteClick ? () => onFavoriteClick(product) : undefined}
                     onAddToCartClick={onAddToCartClick ? () => onAddToCartClick(product) : undefined}
                 />
