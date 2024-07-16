@@ -12,18 +12,7 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { FaHeart, FaRegHeart, FaShoppingCart } from 'react-icons/fa';
-
-interface ProductProps {
-  id: string;
-  imageSrc: string;
-  brandName: string;
-  productName: string;
-  price: number;
-  isNew: boolean;
-  favorite?: boolean;
-  onFavoriteClick?: () => void;
-  onAddToCartClick?: () => void;
-}
+import { ProductProps } from '../types/components/productTypes';
 
 const Product: React.FC<ProductProps> = (productProps) => {
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -31,14 +20,14 @@ const Product: React.FC<ProductProps> = (productProps) => {
   const toast = useToast();
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (productProps.onFavoriteClick) {
-      productProps.onFavoriteClick();
+    if (productProps.onFavorite) {
+      productProps.onFavorite(productProps);
     }
     if (productProps.favorite) {
       toast({
         colorScheme: "gray",
         title: "Removed from favorites",
-        description: `${productProps.productName}`,
+        description: `${productProps.product.productName}`,
         status: "success",
         duration: 1300,
         isClosable: true,
@@ -47,7 +36,7 @@ const Product: React.FC<ProductProps> = (productProps) => {
       toast({
         colorScheme: "gray",
         title: "Added to favorites",
-        description: `${productProps.productName}`,
+        description: `${productProps.product.productName}`,
         status: "success",
         duration: 1300,
         isClosable: true,
@@ -66,7 +55,7 @@ const Product: React.FC<ProductProps> = (productProps) => {
         '.price': { display: 'block' },
       } : undefined}
     >
-      {productProps.isNew && (
+      {productProps.product.isNew && (
         <Badge
           position="absolute"
           top="5px"
@@ -78,7 +67,7 @@ const Product: React.FC<ProductProps> = (productProps) => {
         </Badge>
       )}
       <Box position="relative">
-        <Image src={productProps.imageSrc} alt={productProps.productName} width="100%" />
+        <Image src={productProps.product.imageSrc} alt={productProps.product.productName} width="100%" />
         <Flex
           className="hover-content"
           // position="absolute"
@@ -89,7 +78,7 @@ const Product: React.FC<ProductProps> = (productProps) => {
           zIndex="1"
           bg="gray.700"
         >
-          {productProps.onAddToCartClick && (
+          {productProps.onAddToCart && (
             <IconButton
               aria-label="Add to Cart"
               icon={<FaShoppingCart />}
@@ -98,10 +87,16 @@ const Product: React.FC<ProductProps> = (productProps) => {
               bg="gray.700"
               textColor="white"
               _hover={{ bg: "gray.900" }}
-              onClick={(e) => { e.stopPropagation(); productProps.onAddToCartClick && productProps.onAddToCartClick(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (productProps.onAddToCart) {
+                  productProps.onAddToCart(productProps);
+                }
+              }
+              }
             />
           )}
-          {productProps.onFavoriteClick && (
+          {productProps.onFavorite && (
             <IconButton
               aria-label={productProps.favorite ? "Remove from Favorites" : "Add to Favorites"}
               icon={productProps.favorite ? <FaHeart color="pink" /> : <FaRegHeart />}
@@ -118,13 +113,13 @@ const Product: React.FC<ProductProps> = (productProps) => {
 
       <VStack align="start" p={4} spacing={2}>
         <Text fontWeight="bold" className="brand-name">
-          {productProps.brandName}
+          {productProps.product.brandName}
         </Text>
         <Text className="product-name" noOfLines={2}>
-          {productProps.productName}
+          {productProps.product.productName}
         </Text>
         <Text fontWeight="bold" className="price" display={!isMobile ? "none" : "block"}>
-          ${productProps.price}
+          ${productProps.product.price}
         </Text>
       </VStack>
     </Box>
@@ -132,4 +127,3 @@ const Product: React.FC<ProductProps> = (productProps) => {
 };
 
 export { Product };
-export type { ProductProps };

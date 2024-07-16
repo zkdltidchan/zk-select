@@ -62,7 +62,9 @@ const keys = {
     profile: {
       label: 'header.profile.label',
       settings: 'header.profile.settings',
-      logout: 'header.profile.logout'
+      logout: 'header.profile.logout',
+      login: 'header.profile.login',
+      register: 'header.profile.register',
     },
     styling: 'header.styling',
     newArrival: 'header.newArrival',

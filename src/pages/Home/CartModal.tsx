@@ -12,15 +12,15 @@ import {
   Image,
   Box,
 } from '@chakra-ui/react';
-import { ProductProps } from '../../components/Product';
+import { ProductProps } from '../../types/components/productTypes';
 
 interface CartModalProps {
   isOpen: boolean;
   onClose: () => void;
-  product: ProductProps;
+  item: ProductProps;
 }
 
-const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, product }) => {
+const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, item }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -30,8 +30,8 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, product }) => {
         <ModalBody>
           <Box display="flex" flexDirection={{ base: 'column', md: 'row' }} alignItems="center">
             <Image
-              src={product.imageSrc}
-              alt={product.productName}
+              src={item.product.imageSrc}
+              alt={item.product.productName}
               boxSize={{ base: '150px', md: "300px" }}
               objectFit="cover"
               mb={{ base: 4, md: 0 }}
@@ -39,11 +39,11 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, product }) => {
             />
             <Box textAlign={{ base: 'center', md: 'left' }}>
               <Text fontWeight="bold" fontSize={{ base: 'md', md: 'lg' }}>
-                {product.brandName}
+                {item.product.brandName}
               </Text>
-              <Text fontSize={{ base: 'sm', md: 'md' }}>{product.productName}</Text>
+              <Text fontSize={{ base: 'sm', md: 'md' }}>{item.product.productName}</Text>
               <Text fontWeight="bold" fontSize={{ base: 'lg', md: 'xl' }} mt={2}>
-                ${product.price}
+                ${item.product.price}
               </Text>
             </Box>
           </Box>

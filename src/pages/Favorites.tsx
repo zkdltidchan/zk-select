@@ -2,7 +2,8 @@ import React, {
     useState,
 } from 'react';
 import { Box, Text, SimpleGrid, useDisclosure, Spinner } from '@chakra-ui/react';
-import { Product, ProductProps } from '../components/Product';
+import { Product } from '../components/Product';
+import { ProductProps } from '../types/components/productTypes';
 import { useFavorites } from '../context/FavoriteContext';
 import { useProducts } from '../context/ProductContext';
 import CartModal from './Home/CartModal';
@@ -11,19 +12,19 @@ const Favorites: React.FC = () => {
     const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const [selectedProduct, setSelectedProduct] = useState<ProductProps>({} as ProductProps);
+    const [selectedProduct, setSelectedProduct] = useState<ProductProps| null>(null);
     const { products, loading } = useProducts();
 
-    const handleAddToCartClick = (product: ProductProps) => {
-        setSelectedProduct(product);
+    const handleAddToCartClick = (productProps: ProductProps) => {
+        setSelectedProduct(productProps);
         onOpen();
     };
 
-    const handleFavoriteClick = (product: ProductProps) => {
-        if (isFavorite(product.id)) {
-            removeFromFavorites(product.id);
+    const handleFavoriteClick = (productProps: ProductProps) => {
+        if (isFavorite(productProps.product.id)) {
+            removeFromFavorites(productProps.product.id);
         } else {
-            addToFavorites(product.id);
+            addToFavorites(productProps.product.id);
         }
     };
 
@@ -41,15 +42,15 @@ const Favorites: React.FC = () => {
                 Favorites
             </Text>
             <SimpleGrid columns={{ base: 2, md: 5 }} spacing={6}>
-                {products.map((product: ProductProps, index: number) => {
-                    if (isFavorite(product.id)) {
+                {products.map((productProps: ProductProps, index: number) => {
+                    if (isFavorite(productProps.product.id)) {
                         return (
                             <Product
                                 key={index}
-                                {...product}
-                                favorite={isFavorite(product.id)}
-                                onFavoriteClick={() => handleFavoriteClick(product)}
-                                onAddToCartClick={() => handleAddToCartClick(product)}
+                                {...productProps}
+                                favorite={isFavorite(productProps.product.id)}
+                                onFavorite={handleFavoriteClick}
+                                onAddToCart={handleAddToCartClick}
                             />
                         );
                     }
@@ -61,7 +62,7 @@ const Favorites: React.FC = () => {
                 <CartModal
                     isOpen={isOpen}
                     onClose={onClose}
-                    product={selectedProduct}
+                    item={selectedProduct}
                 />
             )}
         </Box>

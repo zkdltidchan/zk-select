@@ -1,14 +1,14 @@
 import Cookies from 'js-cookie';
-import { ProductProps } from '../components/Product';
+import { ProductApiResponse } from '../types/api/productTypes';
 
 const CART_COOKIE = 'cart';
 
-export const getCart = (): ProductProps[] => {
+export const getCart = (): ProductApiResponse[] => {
   const cart = Cookies.get(CART_COOKIE);
   return cart ? JSON.parse(cart) : [];
 };
 
-export const addToCart = (product: ProductProps): void => {
+export const addToCart = (product: ProductApiResponse): void => {
   const cart = getCart();
   cart.push(product);
   Cookies.set(CART_COOKIE, JSON.stringify(cart));

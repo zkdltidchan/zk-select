@@ -22,6 +22,7 @@ import keys from '../../i18n/keys';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
+import { useAuth } from '../../context/AuthContext';
 
 interface MobileMenuProps {
   LogoComponent: React.ReactNode;
@@ -60,6 +61,7 @@ const ProductsMenuItems = ({ onClose }: { onClose: () => void }) => {
 };
 
 const ProfileMenuItems = ({ onClose }: { onClose: () => void }) => {
+  const { isAuthenticated, logout } = useAuth();
   const { t } = useTranslation();
   const [isProfileOpen, setProfileOpen] = useState(false);
   const toggleProfile = () => setProfileOpen(!isProfileOpen);
@@ -77,8 +79,20 @@ const ProfileMenuItems = ({ onClose }: { onClose: () => void }) => {
       <Collapse in={isProfileOpen}>
         <Box px={4}>
           <VStack align="start" pl={4} pt={2}>
-            <Link onClick={onClose}>{t(keys.header.profile.settings)}</Link>
-            <Link onClick={onClose}>{t(keys.header.profile.logout)}</Link>
+            {isAuthenticated
+              ? (
+                <>
+                  <Link as={RouterLink} to="/profile" onClick={onClose}>Profile</Link>
+                  <Link as={RouterLink} to="/orders" onClick={onClose}>Orders</Link>
+                  <Button onClick={logout}>Logout</Button>
+                </>
+              )
+              : (
+                <>
+                  <Link as={RouterLink} to="/login" onClick={onClose}>Login</Link>
+                  <Link as={RouterLink} to="/register" onClick={onClose}>Register</Link>
+                </>
+              )}
           </VStack>
         </Box>
       </Collapse>
@@ -89,6 +103,7 @@ const ProfileMenuItems = ({ onClose }: { onClose: () => void }) => {
 function MobileMenu({ LogoComponent, menuHeight }: MobileMenuProps) {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
 
   return (
     <>

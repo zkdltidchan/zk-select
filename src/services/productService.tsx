@@ -1,10 +1,10 @@
 // import axios from 'axios';
-import { ProductProps } from '../components/Product';
+import { ProductApiResponse } from '../types/api/productTypes';
 import { getFavorites } from '../services/favoriteService';
 
 // const API_URL = 'https://api.example.com/products';
 
-const products: ProductProps[] = [
+const products: ProductApiResponse[] = [
     {
         id: '1',
         imageSrc: 'https://image.msscdn.net/images/goods_img/20210312/1841764/1841764_17104689185394_500.jpg',
@@ -89,13 +89,7 @@ const products: ProductProps[] = [
 
 
 
-
-// export const fetchProducts = async () => {
-//   const response = await axios.get(API_URL);
-//   return response.data;
-// };
-
-export const fetchProducts = async (): Promise<ProductProps[]> => {
+export const fetchProducts = async (): Promise<ProductApiResponse[]> => {
     const favorites = getFavorites();
 
     return products.map(product => ({

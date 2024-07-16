@@ -46,7 +46,9 @@
       "profile": {
         "label": "Profile",
         "settings": "Settings",
-        "logout": "Logout"
+        "logout": "Logout",
+        "login": "Login",
+        "register": "Register"
       },
       "styling": "Styling",
       "newArrival": "New Arrival",

@@ -1,7 +1,7 @@
 // contexts/ProductContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { fetchProducts } from '../services/productService';
-import { ProductProps } from '../components/Product';
+import { ProductProps } from '../types/components/productTypes';
 
 interface ProductsContextProps {
   products: ProductProps[];
@@ -18,7 +18,11 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({ children }
   const loadProducts = async () => {
     setLoading(true);
     const fetchedProducts = await fetchProducts();
-    setProducts(fetchedProducts);
+    const apiResponse = fetchedProducts.map(product => ({
+      product
+    }));
+    console.log(apiResponse);
+    setProducts(apiResponse);
     setLoading(false);
   };
 

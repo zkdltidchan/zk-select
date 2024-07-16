@@ -32,6 +32,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { menProductItems, womenProductItems, kidsProductItems, ItemProps } from '../../components/Header/Routers';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
+import { useAuth } from '../../context/AuthContext';
 import { useFavorites } from '../../context/FavoriteContext';
 interface DesktopMenuProps {
   LogoComponent: React.ReactNode;
@@ -42,6 +43,7 @@ function DesktopMenu(
   { LogoComponent, menuHeight }: DesktopMenuProps
 ) {
   const { t } = useTranslation();
+  const { isAuthenticated, logout } = useAuth();
   const { onOpen: onProductsOpen, onClose: onProductsClose, isOpen: isProductsOpen } = useDisclosure();
   const { onOpen: onProfileOpen, onClose: onProfileClose, isOpen: isProfileOpen } = useDisclosure();
   // selected men/women/kids to show products items
@@ -147,8 +149,17 @@ function DesktopMenu(
               <PopoverHeader>{t(keys.header.profile.label)} </PopoverHeader>
               <PopoverBody>
                 <VStack>
-                  <Link as={RouterLink} to="/profile/settings">{t(keys.header.profile.settings)}</Link>
-                  <Link as={RouterLink} to="/logout">{t(keys.header.profile.logout)}</Link>
+                  {isAuthenticated ? (
+                    <>
+                      <Link as={RouterLink} to="/profile/settings">{t(keys.header.profile.settings)}</Link>
+                      <Button onClick={logout}>{t(keys.header.profile.logout)}</Button>
+                    </>
+                  ) : (
+                    <>
+                      <Link as={RouterLink} to="/login">{t(keys.header.profile.login)}</Link>
+                      <Link as={RouterLink} to="/register">{t(keys.header.profile.register)}</Link>
+                    </>
+                  )}
                 </VStack>
               </PopoverBody>
             </PopoverContent>

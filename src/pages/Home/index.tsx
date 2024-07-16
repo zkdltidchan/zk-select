@@ -11,13 +11,13 @@ import {
 } from '@chakra-ui/react';
 import Carousel from './Carousel';
 import ProductList from './ProductList';
-import { ProductProps } from '../../components/Product';
+import { ProductProps } from '../../types/components/productTypes';
 import CartModal from './CartModal';
 import { useFavorites } from '../../context/FavoriteContext';
 import { useProducts } from '../../context/ProductContext';
 
 const Home: React.FC = () => {
-  const [selectedProduct, setSelectedProduct] = useState<ProductProps>({} as ProductProps);
+  const [selectedProduct, setSelectedProduct] = useState<ProductProps | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { products, loading } = useProducts();
@@ -27,11 +27,11 @@ const Home: React.FC = () => {
     onOpen();
   };
 
-  const handleFavoriteClick = async (product: ProductProps) => {
-    if (isFavorite(product.id)) {
-      removeFromFavorites(product.id);
+  const handleFavoriteClick = async (productProps: ProductProps) => {
+    if (isFavorite(productProps.product.id)) {
+      removeFromFavorites(productProps.product.id);
     } else {
-      addToFavorites(product.id);
+      addToFavorites(productProps.product.id);
     }
   };
 
@@ -51,28 +51,28 @@ const Home: React.FC = () => {
       <Heading>NEW ARRIVALS</Heading>
       <ProductList
         products={products}
-        onAddToCartClick={handleAddToCartClick}
-        onFavoriteClick={handleFavoriteClick}
+        onAddToCart={handleAddToCartClick}
+        onFavorite={handleFavoriteClick}
       />
       <Divider />
       <Heading>RANKING</Heading>
       <ProductList
         products={products}
-        onAddToCartClick={handleAddToCartClick}
-        onFavoriteClick={handleFavoriteClick}
+        onAddToCart={handleAddToCartClick}
+        onFavorite={handleFavoriteClick}
       />
       <Divider />
       <Heading>STYLING</Heading>
       <ProductList
         products={products}
-        onAddToCartClick={handleAddToCartClick}
-        onFavoriteClick={handleFavoriteClick}
+        onAddToCart={handleAddToCartClick}
+        onFavorite={handleFavoriteClick}
       />
       {selectedProduct && (
         <CartModal
           isOpen={isOpen}
           onClose={onClose}
-          product={selectedProduct}
+          item={selectedProduct}
         />
       )}
     </VStack>
