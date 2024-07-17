@@ -1,4 +1,13 @@
-import { extendTheme, withDefaultColorScheme, ThemeConfig, ComponentStyleConfig, withDefaultVariant } from '@chakra-ui/react';
+import {
+  extendTheme,
+  withDefaultColorScheme,
+  ThemeConfig,
+  ComponentStyleConfig,
+  withDefaultVariant,
+  withDefaultProps,
+  Menu,
+  MenuItem,
+} from '@chakra-ui/react';
 
 // const extendColors = {
 //   brand: {
@@ -18,6 +27,50 @@ import { extendTheme, withDefaultColorScheme, ThemeConfig, ComponentStyleConfig,
 const config: ThemeConfig = {
   initialColorMode: 'system',
   useSystemColorMode: false,
+};
+
+
+const componentsWithBorderRadius: ComponentStyleConfig = {
+  baseStyle: {
+    borderRadius: 'none',
+    // menu
+    button: {
+      bg: 'white',
+      color: 'black',
+      p: 2,
+      _hover: {
+      },
+      _focus: {
+      },
+    },
+    list: {
+      borderRadius: 'none',
+      backgroundColor: 'white',
+      color: 'black',
+    },
+    item: {
+      bg: 'white',
+      color: 'black',
+      _hover: {
+        bg: 'gray.100',
+      },
+      _focus: {
+        bg: 'gray.200',
+      },
+    },
+
+    // input, select
+    field: {
+      borderRadius: 0,
+      ringBorderRadius: 'none',
+      textColor: 'black',
+      _focusWithin: {
+      }
+    },
+    icon: {
+      color: "black"
+    }
+  },
 };
 
 
@@ -67,6 +120,13 @@ const theme = extendTheme(
     config,
     components: {
       Button,
+      Box: componentsWithBorderRadius,
+      Input: componentsWithBorderRadius,
+      Select: componentsWithBorderRadius,
+      Menu  : componentsWithBorderRadius,
+      MenuList: componentsWithBorderRadius,
+      MenuButton: componentsWithBorderRadius,
+      MenuItem: componentsWithBorderRadius,
     },
   },
   withDefaultColorScheme({
@@ -76,6 +136,11 @@ const theme = extendTheme(
   withDefaultVariant({
     variant: 'ghost',
     components: ['Button'],
+  }),
+  withDefaultProps({
+    defaultProps: {
+    },
+    // components: ['Button', 'Input', 'Select'],
   })
 );
 

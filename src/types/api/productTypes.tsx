@@ -6,7 +6,14 @@ export interface ProductApiResponse {
     productName: string;
     price: number;
     isNew: boolean;
-    imageSrc: string;
+    imageUrl: string;
+    sex?: string;
+    hashTags?: string[];
+    category?: string;
+    onSale?: boolean;
+    onSalePrice?: number;
+    availableColors: string[];
+    availableSizes: string[];
 }
 
 export type ProductListApiResponse = ApiResponse<ProductApiResponse>

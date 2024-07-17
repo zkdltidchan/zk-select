@@ -67,7 +67,7 @@ const Product: React.FC<ProductProps> = (productProps) => {
         </Badge>
       )}
       <Box position="relative">
-        <Image src={productProps.product.imageSrc} alt={productProps.product.productName} width="100%" />
+        <Image src={productProps.product.imageUrl} alt={productProps.product.productName} width="100%" />
         <Flex
           className="hover-content"
           // position="absolute"
@@ -99,7 +99,7 @@ const Product: React.FC<ProductProps> = (productProps) => {
           {productProps.onFavorite && (
             <IconButton
               aria-label={productProps.favorite ? "Remove from Favorites" : "Add to Favorites"}
-              icon={productProps.favorite ? <FaHeart color="pink" /> : <FaRegHeart />}
+              icon={productProps.favorite ? <FaHeart color='#1E90ff' /> : <FaRegHeart />}
               flex="1"
               borderRadius="none"
               bg="gray.700"

@@ -68,7 +68,7 @@ function DesktopMenu(
                 <ChevronDownIcon />
               </Link>
             </PopoverTrigger>
-            <PopoverContent w="100vw">
+            <PopoverContent w="100vw" borderRadius="none">
               <PopoverArrow />
               <PopoverHeader>
                 <HStack justify='center'>
@@ -83,7 +83,7 @@ function DesktopMenu(
                     onClick={() => toggleProducts('kids')}>KIDS</Button>
                 </HStack>
               </PopoverHeader>
-              <PopoverBody paddingX={16}>
+              <PopoverBody>
                 <SimpleGrid columns={4} spacing={4}>
                   {
                     selected === 'women' &&
@@ -144,9 +144,8 @@ function DesktopMenu(
             <PopoverTrigger>
               <Button leftIcon={<FaUser />} aria-label={t(keys.header.profile.label)}><ChevronDownIcon /></Button>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent borderRadius="none">
               <PopoverArrow />
-              <PopoverHeader>{t(keys.header.profile.label)} </PopoverHeader>
               <PopoverBody>
                 <VStack>
                   {isAuthenticated ? (

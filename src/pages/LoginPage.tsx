@@ -29,7 +29,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+    <Box display="flex" justifyContent="center" height="100vh">
       <VStack as="form" onSubmit={handleSubmit} spacing={4} w="full" maxW="md">
         <Heading>Login</Heading>
         {error && <Text color="red.500">{error}</Text>}
