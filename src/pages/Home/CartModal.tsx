@@ -75,7 +75,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, item }) => {
                   </MenuButton>
                   <MenuList maxH="200px" overflowY="auto">
                     {item.product.availableColors.map((color) => (
-                      <MenuItem key={color} onClick={() => setSelectedColor(color)}>
+                      <MenuItem key={color} onClick={() => setSelectedColor(color)} bg={selectedColor === color ? 'gray.400' : 'white'}>
                         {color}
                       </MenuItem>
                     ))}
@@ -84,14 +84,14 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, item }) => {
                 <Menu>
                   <MenuButton w="100%">
                     <HStack justify={"space-between"}>
-                      <>{selectedSize}</>
+                      <>{selectedSize.toUpperCase()}</>
                       <ChevronDownIcon />
                     </HStack>
                   </MenuButton>
                   <MenuList maxH="200px" overflowY="auto">
                     {item.product.availableSizes.map((size) => (
-                      <MenuItem key={size} onClick={() => setSelectedSize(size)}>
-                        {size}
+                      <MenuItem key={size} onClick={() => setSelectedSize(size)} bg={selectedSize === size ? 'gray.400' : 'white'}>
+                        {size.toUpperCase()}
                       </MenuItem>
                     ))}
                   </MenuList>
