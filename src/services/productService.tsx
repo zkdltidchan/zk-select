@@ -18,7 +18,7 @@ const products: ProductApiResponse[] = [
         onSale: true,
         onSalePrice: 20,
         availableColors: ['white'],
-        availableSizes: ['s', 'm', 'l'],
+        availableSizes: ['S', 'M', 'L'],
     },
     {
         id: '2',
@@ -33,7 +33,7 @@ const products: ProductApiResponse[] = [
         onSale: true,
         onSalePrice: 24,
         availableColors: ['charcoal', 'black'],
-        availableSizes: ['s', 'm', 'l'],
+        availableSizes: ['S', 'M', 'L'],
     },
     {
         id: '3',
@@ -48,7 +48,7 @@ const products: ProductApiResponse[] = [
         onSale: true,
         onSalePrice: 28,
         availableColors: ['red'],
-        availableSizes: ['s', 'm', 'l'],
+        availableSizes: ['S', 'M', 'L'],
     },
     {
         id: '4',
@@ -63,7 +63,7 @@ const products: ProductApiResponse[] = [
         onSale: true,
         onSalePrice: 50,
         availableColors: ['white'],
-        availableSizes: ['s', 'm', 'l'],
+        availableSizes: ['S', 'M', 'L'],
     },
     {
         id: '5',
@@ -78,7 +78,7 @@ const products: ProductApiResponse[] = [
         onSale: true,
         onSalePrice: 10,
         availableColors: ['cream'],
-        availableSizes: ['s', 'm', 'l'],
+        availableSizes: ['S', 'M', 'L'],
     },
     {
         id: '6',
@@ -93,7 +93,7 @@ const products: ProductApiResponse[] = [
         onSale: true,
         onSalePrice: 20,
         availableColors: ['black'],
-        availableSizes: ['s', 'm', 'l'],
+        availableSizes: ['S', 'M', 'L'],
     },
     {
         id: '7',
@@ -108,7 +108,7 @@ const products: ProductApiResponse[] = [
         onSale: true,
         onSalePrice: 60,
         availableColors: ['green'],
-        availableSizes: ['s', 'm', 'l'],
+        availableSizes: ['S', 'M', 'L'],
     },
     {
         id: '8',
@@ -123,7 +123,7 @@ const products: ProductApiResponse[] = [
         onSale: true,
         onSalePrice: 60,
         availableColors: ['navy'],
-        availableSizes: ['s', 'm', 'l'],
+        availableSizes: ['S', 'M', 'L'],
     },
     {
         id: '9',
@@ -138,7 +138,7 @@ const products: ProductApiResponse[] = [
         onSale: true,
         onSalePrice: 60,
         availableColors: ['skyblue'],
-        availableSizes: ['s', 'm', 'l'],
+        availableSizes: ['S', 'M', 'L'],
     },
     {
         id: '10',
@@ -153,7 +153,7 @@ const products: ProductApiResponse[] = [
         onSale: true,
         onSalePrice: 70,
         availableColors: ['black'],
-        availableSizes: ['s', 'm', 'l'],
+        availableSizes: ['S', 'M', 'L'],
     },
 ];
 

@@ -5,8 +5,6 @@ import {
   ComponentStyleConfig,
   withDefaultVariant,
   withDefaultProps,
-  Menu,
-  MenuItem,
 } from '@chakra-ui/react';
 
 // const extendColors = {
@@ -25,7 +23,7 @@ import {
 // };
 
 const config: ThemeConfig = {
-  initialColorMode: 'system',
+  initialColorMode: 'dark',
   useSystemColorMode: false,
 };
 

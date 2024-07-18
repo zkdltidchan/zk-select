@@ -23,6 +23,7 @@ import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
 import { ProductsProvider } from './context/ProductContext';
 import { FavoritesProvider } from './context/FavoriteContext';
+import { CartProvider } from './context/CartContext';
 
 const RouterContainer: React.FC = () => {
   const location = useLocation();
@@ -72,6 +73,7 @@ const App: React.FC = () => {
   return (
     <AuthProvider>
       <ProductsProvider>
+        <CartProvider>
         <FavoritesProvider>
           <ChakraProvider theme={theme}>
             <Router basename='zk-select'>
@@ -79,6 +81,7 @@ const App: React.FC = () => {
             </Router>
           </ChakraProvider>
         </FavoritesProvider>
+        </CartProvider>
       </ProductsProvider>
     </AuthProvider>
   );

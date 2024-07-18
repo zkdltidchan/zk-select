@@ -34,6 +34,7 @@ import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 import { useAuth } from '../../context/AuthContext';
 import { useFavorites } from '../../context/FavoriteContext';
+import { useCart } from '../../context/CartContext';
 interface DesktopMenuProps {
   LogoComponent: React.ReactNode;
   menuHeight: string | number;
@@ -54,6 +55,7 @@ function DesktopMenu(
   };
 
   const { favorites } = useFavorites();
+  const { cartItems } = useCart();
 
   return (
     <HStack w="100%" h={menuHeight} spacing={4} justify="space-between" align="center">
@@ -165,7 +167,29 @@ function DesktopMenu(
           </Popover>
         </Box>
         <Link as={RouterLink} to="/cart">
-          <IconButton icon={<FaShoppingCart />} aria-label={t(keys.header.cart)} />
+          <Box position="relative">
+            <IconButton icon={<FaShoppingCart />} aria-label={t(keys.header.cart)} />
+            {cartItems.length > 0 && (
+              <Badge
+                position="absolute"
+                top="0"
+                right="0"
+                bg="blue.400"
+                color="white"
+                width="15px"
+                height="15px"
+                fontSize="8px"
+                alignItems="center"
+                justifyContent="center"
+                transform="translate(-15%, 25%)"
+                borderRadius="full"
+                display="flex"
+                zIndex="1"
+              >
+                {cartItems.length}
+              </Badge>
+            )}
+          </Box>
         </Link>
         <Link as={RouterLink} to="/favorites">
           <Box position="relative">
